@@ -1,0 +1,5 @@
+include ':ft_main'
+include ':ft_login'
+include ':lib_base'
+include ':app'
+rootProject.name = "PluginDemo"
