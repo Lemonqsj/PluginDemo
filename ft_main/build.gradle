@@ -12,4 +12,5 @@ android {
 
 dependencies {
     api project(':lib_base')
+    kapt  rootProject.ext.dependencies["arouter_compiler"]
 }

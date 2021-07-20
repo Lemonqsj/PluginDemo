@@ -1,8 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+//    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.alibaba.arouter'
 }
 
 android {
@@ -15,8 +16,60 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+//        //阿里路由框架配置
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [AROUTER_MODULE_NAME: project.getName()]
+//                includeCompileClasspath = true
+//            }
+//        }
+
+
+        kapt {
+            arguments {
+                // 路由框架译配置
+                // module名称
+                arg("AROUTER_MODULE_NAME", project.getName())
+                // 是否生成路由文档，"enable"：生成文档，其他字符串不生成路由文档
+                arg("AROUTER_GENERATE_DOC", "enable")
+            }
+        }
+
+//        kapt {
+//            arguments {
+//                arg("AROUTER_MODULE_NAME", project.getName())
+//                arg("AROUTER_GENERATE_DOC", "enable")
+//                arg("includeCompileClasspath", "true")
+//            }
+//            generateStubs = true
+//        }
+
+//        kapt {
+//            arguments {
+//                arg("moduleName", project.getName())
+//                arg("AROUTER_MODULE_NAME",project.getName())
+//            }
+//            generateStubs = true
+//        }
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            if (isBuildModule.toBoolean()) {
+                //独立运行
+                manifest.srcFile 'src/main/alone/AndroidManifest.xml'
+            } else {
+                //合并到宿主
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                resources {
+                    //正式版本时，排除alone文件夹下所有调试文件
+                    exclude 'src/main/alone/*'
+                }
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -33,6 +86,13 @@ android {
 
     dataBinding {
         enabled true
+    }
+//    buildFeatures {
+//        viewBinding true
+//    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -80,6 +140,7 @@ dependencies {
     api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
         exclude group: 'com.android.support'
     }
+    kapt "com.android.databinding:compiler:3.1.4"
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
     kapt rootProject.ext.dependencies["lifecycle-compiler"]
@@ -99,9 +160,11 @@ dependencies {
     api(rootProject.ext.dependencies["arouter_api"]) {
         exclude group: 'com.android.support'
     }
-    api  rootProject.ext.dependencies["arouter_compiler"]
+//    annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
+    kapt  rootProject.ext.dependencies["arouter_compiler"]
 
     api rootProject.ext.dependencies["xpopup"]
     api rootProject.ext.dependencies["loadsir"]
     api rootProject.ext.dependencies["lottie"]
+    api rootProject.ext.dependencies["navigation"]
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SrcScrollFrameLayout">
+        <!--背景图片-->
+        <attr name="src" format="reference" />
+        <!--遮罩层颜色，建议带透明度-->
+        <attr name="maskLayerColor" format="color" />
+        <!--是否滚动-->
+        <attr name="isScroll" format="boolean" />
+        <!--滚动速度,建议取值区间 [1,50] -->
+        <attr name="speed" format="integer">
+            <enum name="slow" value="1" />
+            <enum name="ordinary" value="3" />
+            <enum name="fast" value="5" />
+        </attr>
+        <!-- 滚动方向,默认是竖直方向滚动-->
+        <attr name="scrollOrientation" format="integer">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <style name="TextInputWhiteStyle" parent="AppTheme">
+        <!--输入框提示字体色-->
+        <item name="android:textColorHint">#ffffff</item>
+        <!--输入框下划线默认颜色-->
+        <!--        <item name="colorControlNormal">@color/white</item>-->
+        <!--输入框下划线选中状态色-->
+        <item name="colorControlActivated">#ffffff</item>
+        <!--输入框光标颜色-->
+        <item name="colorControlHighlight">#ffffff</item>
+    </style>
+
+    <style name="TextInputThemeStyle" parent="AppTheme">
+        <!--输入框提示字体色-->
+        <!--        <item name="android:textColorHint">@color/white</item>-->
+        <!--输入框下划线默认颜色-->
+        <item name="colorControlNormal">@color/md_theme_red</item>
+        <!--输入框下划线选中状态色-->
+        <item name="colorControlActivated">@color/md_theme_red</item>
+        <!--输入框光标颜色-->
+        <item name="colorControlHighlight">@color/md_theme_red</item>
+    </style>
+
+</resources>
