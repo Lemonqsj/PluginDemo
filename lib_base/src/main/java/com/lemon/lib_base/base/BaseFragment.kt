@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.blankj.utilcode.util.LogUtils
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.Convertor
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
+import com.lemon.lib_base.callback.ErrorCallback
 import com.lemon.lib_base.callback.LoadErrorCallback
 import com.lemon.lib_base.callback.LoadingCallback
 import com.lxj.xpopup.core.BasePopupView
@@ -20,6 +22,7 @@ import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRxFragment(),
     IBaseView {
+
 
     lateinit var binding: V
     lateinit var viewModel: VM
@@ -47,19 +50,21 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
             .setDefaultCallback(SuccessCallback::class.java)
             .build()
 
+
+
         binding = DataBindingUtil.inflate(inflater, initContentView(), container, false)
-        loadService =
-            loadSir.register(
-                binding.root,
-                Callback.OnReloadListener { reload() },
-                Convertor<BaseBean<*>?> { t ->
-                    if (t == null || t.errorCode != 0) {
-                        LoadErrorCallback::class.java
-                    } else {
-                        SuccessCallback::class.java
-                    }
-                }) as LoadService<BaseBean<*>?>
+        loadService = loadSir.register(binding.root,
+            Callback.OnReloadListener { reload() },
+            Convertor<BaseBean<*>?> { t ->
+                if (t == null || t.errorCode != 0) {
+                    ErrorCallback::class.java
+                } else {
+                    SuccessCallback::class.java
+                }
+            }) as LoadService<BaseBean<*>?>
         return loadService.loadLayout
+
+
     }
 
 
@@ -90,23 +95,34 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
         }
     }
 
+    /**
+     * @return 是否需要标题栏
+     */
+    protected open fun useBaseLayout(): Boolean {
+        return true
+    }
+
     private fun initViewDataBinding() {
         viewModelId = initVariableId()
         viewModel = initViewModel()
-
         rootBinding?.setVariable(viewModelId, viewModel)
         rootBinding?.lifecycleOwner = this
 
+        binding.setVariable(viewModelId, viewModel)
+        binding.lifecycleOwner = this
         lifecycle.addObserver(viewModel)
         viewModel.injectLifecycleProvider(this)
 
-//        viewModel
+        viewModel.loadService=loadService
+
+
     }
 
     private fun initViewModel(): VM {
         val type = javaClass.genericSuperclass
         val modelClass: Class<VM> =
             (type as ParameterizedType).actualTypeArguments[1] as Class<VM>
+        LogUtils.d("------initViewModel---------"+modelClass.name)
         return ViewModelProvider(this, get() as AppViewModelFactory).get(modelClass)
     }
 

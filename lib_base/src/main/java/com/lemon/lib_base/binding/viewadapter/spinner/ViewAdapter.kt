@@ -1,4 +1,4 @@
-package com.czl.lib_base.binding.viewadapter.spinner
+package com.lemon.lib_base.binding.viewadapter.spinner
 
 import android.text.TextUtils
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 import java.util.*
 
 

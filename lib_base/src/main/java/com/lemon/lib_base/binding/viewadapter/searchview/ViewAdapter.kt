@@ -1,9 +1,9 @@
-package com.czl.lib_base.binding.viewadapter.searchview
+package com.lemon.lib_base.binding.viewadapter.searchview
 
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.extension.textChangeDebounce
-import com.czl.lib_base.widget.MaterialSearchBar
+import com.lemon.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.widget.MaterialSearchBar
+
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
 
 /**
@@ -53,13 +53,13 @@ object ViewAdapter {
         searchBar.setSuggestionsClickListener(listener)
     }
 
-    @JvmStatic
-    @BindingAdapter("onSearchTextChangeCommand")
-    fun onSearchTextChangeCommand(searchBar: MaterialSearchBar, command: BindingCommand<String?>?) {
-        searchBar.searchEditText.textChangeDebounce {
-            command?.execute(it)
-        }
-    }
+//    @JvmStatic
+//    @BindingAdapter("onSearchTextChangeCommand")
+//    fun onSearchTextChangeCommand(searchBar: MaterialSearchBar, command: BindingCommand<String?>?) {
+//        searchBar.searchEditText.textChangeDebounce {
+//            command?.execute(it)
+//        }
+//    }
 
     @JvmStatic
     @BindingAdapter("searchPlaceHolder")

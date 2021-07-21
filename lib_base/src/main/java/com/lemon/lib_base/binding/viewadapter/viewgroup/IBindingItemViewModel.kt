@@ -1,4 +1,4 @@
-package com.czl.lib_base.binding.viewadapter.viewgroup
+package com.lemon.lib_base.binding.viewadapter.viewgroup
 
 import androidx.databinding.ViewDataBinding
 

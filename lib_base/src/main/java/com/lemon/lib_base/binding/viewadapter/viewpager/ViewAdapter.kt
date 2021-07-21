@@ -1,11 +1,11 @@
-package com.czl.lib_base.binding.viewadapter.viewpager
+package com.lemon.lib_base.binding.viewadapter.viewpager
 
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 
 object ViewAdapter {
     @JvmStatic

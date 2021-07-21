@@ -1,9 +1,8 @@
-package com.czl.lib_base.binding.viewadapter.checkbox
+package com.lemon.lib_base.binding.viewadapter.checkbox
 
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 
 object ViewAdapter {
     /**

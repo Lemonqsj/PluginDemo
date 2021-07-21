@@ -1,10 +1,10 @@
-package com.czl.lib_base.binding.viewadapter.listview
+package com.lemon.lib_base.binding.viewadapter.listview
 
 import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 

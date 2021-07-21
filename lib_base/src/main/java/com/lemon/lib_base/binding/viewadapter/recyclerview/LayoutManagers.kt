@@ -1,4 +1,4 @@
-package com.czl.lib_base.binding.viewadapter.recyclerview
+package com.lemon.lib_base.binding.viewadapter.recyclerview
 
 import androidx.annotation.IntDef
 import androidx.recyclerview.widget.GridLayoutManager

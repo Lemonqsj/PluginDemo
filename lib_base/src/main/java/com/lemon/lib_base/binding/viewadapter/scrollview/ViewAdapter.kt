@@ -1,9 +1,9 @@
-package com.czl.lib_base.binding.viewadapter.scrollview
+package com.lemon.lib_base.binding.viewadapter.scrollview
 
 import android.widget.ScrollView
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 
 
 object ViewAdapter {

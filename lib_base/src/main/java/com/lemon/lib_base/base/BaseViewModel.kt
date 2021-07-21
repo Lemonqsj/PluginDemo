@@ -3,11 +3,12 @@ package com.lemon.lib_base.base
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.kingja.loadsir.core.LoadService
 import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import java.lang.ref.WeakReference
-import java.util.function.Consumer
 
 /**
  *
@@ -26,7 +27,7 @@ import java.util.function.Consumer
 open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M) :
     AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?> {
 
-
+    lateinit var loadService: LoadService<BaseBean<*>?>
     private lateinit var lifecycle: WeakReference<LifecycleProvider<*>>
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 

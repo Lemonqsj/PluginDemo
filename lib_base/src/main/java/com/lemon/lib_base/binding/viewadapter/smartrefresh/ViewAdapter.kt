@@ -1,7 +1,7 @@
-package com.czl.lib_base.binding.viewadapter.smartrefresh
+package com.lemon.lib_base.binding.viewadapter.smartrefresh
 
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 

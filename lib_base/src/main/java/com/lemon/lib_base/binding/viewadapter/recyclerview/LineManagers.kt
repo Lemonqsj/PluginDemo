@@ -1,4 +1,4 @@
-package com.czl.lib_base.binding.viewadapter.recyclerview
+package com.lemon.lib_base.binding.viewadapter.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration

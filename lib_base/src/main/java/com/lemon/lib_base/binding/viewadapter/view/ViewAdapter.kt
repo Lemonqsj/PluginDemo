@@ -1,12 +1,13 @@
-package com.czl.lib_base.binding.viewadapter.view
+package com.lemon.lib_base.binding.viewadapter.view
 
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.extension.clickWithTrigger
-import com.czl.lib_base.extension.longClick
+import com.blankj.utilcode.util.LogUtils
 import com.jakewharton.rxbinding3.view.longClicks
+import com.lemon.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.extension.clickWithTrigger
+import com.lemon.lib_base.extension.longClick
 import java.util.concurrent.TimeUnit
 
 object ViewAdapter {
@@ -20,6 +21,7 @@ object ViewAdapter {
     @JvmStatic
     @BindingAdapter(value = ["onClickCommand", "isThrottleFirst"], requireAll = false)
     fun onClickCommand(view: View?, clickCommand: BindingCommand<*>?, isThrottleFirst: Boolean) {
+        LogUtils.d("-------------onClickCommand-----"+isThrottleFirst+"----"+(clickCommand==null)+"----------"+(view==null))
         if (isThrottleFirst) {
             view?.setOnClickListener { clickCommand?.execute() }
         } else {

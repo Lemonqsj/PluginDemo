@@ -162,9 +162,22 @@ dependencies {
     }
 //    annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
     kapt  rootProject.ext.dependencies["arouter_compiler"]
+    api rootProject.ext.dependencies["refresh-header"]
+    api rootProject.ext.dependencies["refresh-footer-ball"]
+    api rootProject.ext.dependencies["refresh-footer-classic"]
+    api rootProject.ext.dependencies["refresh"]
 
+
+    api rootProject.ext.dependencies["searchview"]
     api rootProject.ext.dependencies["xpopup"]
     api rootProject.ext.dependencies["loadsir"]
     api rootProject.ext.dependencies["lottie"]
     api rootProject.ext.dependencies["navigation"]
+    api rootProject.ext.dependencies["viewpager2"]
+    api rootProject.ext.dependencies["banner"]
+    api rootProject.ext.dependencies["toast"]
+    api rootProject.ext.dependencies["bindingcollectionadapter"]
+    api rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
+    api rootProject.ext.dependencies["shimmer-recyclerView"]
+
 }

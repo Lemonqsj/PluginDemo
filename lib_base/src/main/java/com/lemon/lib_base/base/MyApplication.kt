@@ -21,6 +21,12 @@ class MyApplication : Application() {
         setApplication(this)
         ARouter.init(this)
 
+        // 初始化Fragmentation
+        Fragmentation.builder()
+            .stackViewMode(Fragmentation.NONE)
+            .debug(BuildConfig.DEBUG)
+            .install()
+
 
         MMKV.initialize(this)
         startKoin {
@@ -29,10 +35,6 @@ class MyApplication : Application() {
             modules(allModule)
         }
 
-        Fragmentation.builder()
-            .stackViewMode(Fragmentation.NONE)
-            .debug(BuildConfig.DEBUG)
-            .install()
 
 
     }

@@ -1,4 +1,4 @@
-package com.czl.lib_base.binding.viewadapter.image
+package com.lemon.lib_base.binding.viewadapter.image
 
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
@@ -9,7 +9,6 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableInt
-import com.czl.lib_base.extension.loadUrl
 
 object ViewAdapter {
     @JvmStatic
@@ -21,7 +20,7 @@ object ViewAdapter {
         errorRes: Drawable? = null
     ) {
         if (!TextUtils.isEmpty(url)) {
-            imageView.loadUrl(url, placeholderRes, errorRes)
+//            imageView.loadUrl(url, placeholderRes, errorRes)
         }
     }
 

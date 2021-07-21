@@ -1,6 +1,8 @@
 package com.lemon.lib_base.binding.command;
 
 
+import com.blankj.utilcode.util.LogUtils;
+
 /**
  * About : kelin的ReplyCommand
  * 执行的命令回调, 用于ViewModel与xml之间的数据绑定
@@ -11,6 +13,7 @@ public class BindingCommand<T> {
     private BindingFunction<Boolean> canExecute0;
 
     public BindingCommand(BindingAction execute) {
+        LogUtils.d("---------BindingCommand------");
         this.execute = execute;
     }
 

@@ -1,8 +1,8 @@
 package com.czl.lib_base.binding.viewadapter.tablayout
 
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
 import com.google.android.material.tabs.TabLayout
+import com.lemon.lib_base.binding.command.BindingCommand
 
 /**
  * @author Alwyn

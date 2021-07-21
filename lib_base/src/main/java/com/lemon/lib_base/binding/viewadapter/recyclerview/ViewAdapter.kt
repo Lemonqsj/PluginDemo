@@ -1,25 +1,24 @@
-package com.czl.lib_base.binding.viewadapter.recyclerview
+package com.lemon.lib_base.binding.viewadapter.recyclerview
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemAnimator
-import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.binding.viewadapter.recyclerview.LayoutManagers.LayoutManagerFactory
-import com.czl.lib_base.binding.viewadapter.recyclerview.LineManagers.LineManagerFactory
+
+import com.lemon.lib_base.binding.command.BindingCommand
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
 object ViewAdapter {
     @JvmStatic
     @BindingAdapter("lineManager")
-    fun setLineManager(recyclerView: RecyclerView, lineManagerFactory: LineManagerFactory) {
+    fun setLineManager(recyclerView: RecyclerView, lineManagerFactory: LineManagers.LineManagerFactory) {
         recyclerView.addItemDecoration(lineManagerFactory.create(recyclerView))
     }
 
     @JvmStatic
     @BindingAdapter("layoutManager")
-    fun setLayoutManager(recyclerView: RecyclerView, layoutManagerFactory: LayoutManagerFactory) {
+    fun setLayoutManager(recyclerView: RecyclerView, layoutManagerFactory: LayoutManagers.LayoutManagerFactory) {
         recyclerView.layoutManager = layoutManagerFactory.create(recyclerView)
     }
 

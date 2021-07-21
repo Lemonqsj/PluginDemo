@@ -1,10 +1,10 @@
-package com.czl.lib_base.binding.viewadapter.mswitch
+package com.lemon.lib_base.binding.viewadapter.mswitch
 
 import android.widget.CompoundButton
 import android.widget.Switch
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 
 object ViewAdapter {
     /**

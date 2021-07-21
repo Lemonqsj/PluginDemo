@@ -1,13 +1,11 @@
-package com.czl.lib_base.binding.viewadapter.edittext
+package com.lemon.lib_base.binding.viewadapter.edittext
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import com.blankj.utilcode.util.KeyboardUtils
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 
 object ViewAdapter {
     /**
@@ -21,7 +19,7 @@ object ViewAdapter {
             editText.requestFocus()
             editText.isFocusableInTouchMode = needRequestFocus
             KeyboardUtils.showSoftInput(editText)
-        }else{
+        } else {
             KeyboardUtils.hideSoftInput(editText)
             editText.clearFocus()
         }

@@ -1,8 +1,8 @@
-package com.czl.lib_base.binding.viewadapter.bottombar
+package com.lemon.lib_base.binding.viewadapter.bottombar
 
 import androidx.databinding.BindingAdapter
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
-import com.czl.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.binding.command.BindingCommand
 
 /**
  * @author Alwyn
