@@ -2,6 +2,7 @@ package com.lemon.ft_main.viewmodel
 
 import android.view.View
 import androidx.databinding.ObservableInt
+import com.blankj.utilcode.util.LogUtils
 import com.lemon.lib_base.base.BaseBean
 import com.lemon.lib_base.base.BaseViewModel
 import com.lemon.lib_base.base.MyApplication
@@ -13,6 +14,7 @@ import com.lemon.lib_base.data.bean.HomeArticleBean
 import com.lemon.lib_base.data.bean.HomeBannerBean
 import com.lemon.lib_base.data.bean.ProjectBean
 import com.lemon.lib_base.data.bean.SearchHotKeyBean
+import com.lemon.lib_base.event.SingleLiveEvent
 import com.lemon.lib_base.extension.ApiSubscriberHelper
 import com.lemon.lib_base.utils.RxThreadHelper
 import com.lemon.lib_base.utils.ToastHelper.showErrorToast
@@ -28,19 +30,25 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
     var currentArticlePage: Int = 0
     var currentProjectPage = 0
 
-//    inner class UiChangeEvent {
-//        val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>> = SingleLiveEvent()
-//        val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-//        val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
-//        val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-//        val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-//        val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-//        val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean?> = SingleLiveEvent()
-//        val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean?> = SingleLiveEvent()
-//        val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-//        val loadSearchHotKeyEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
-//        val searchIconClickEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-//    }
+
+    val uc = UiChangeEvent()
+    inner class UiChangeEvent {
+        val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>> = SingleLiveEvent()
+        val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
+        val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean?> = SingleLiveEvent()
+        val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean?> = SingleLiveEvent()
+        val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val loadSearchHotKeyEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
+        val searchIconClickEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+    }
+
+
+
+
     val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
         when (tabSelectedPosition.get()) {
             0 -> {
@@ -67,16 +75,16 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
 
     val onTabSelectedCommand: BindingCommand<Int> = BindingCommand(BindingConsumer {
         tabSelectedPosition.set(it)
-//        uc.tabSelectedEvent.postValue(it)
+        uc.tabSelectedEvent.postValue(it)
     })
     /*置顶*/
     val fabOnClickListener: View.OnClickListener = View.OnClickListener {
-//        uc.moveTopEvent.postValue(tabSelectedPosition.get())
+        uc.moveTopEvent.postValue(tabSelectedPosition.get())
     }
 
     /*打开抽屉*/
     val onDrawerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-//        uc.drawerOpenEvent.call()
+        uc.drawerOpenEvent.call()
     })
     /*确认搜索*/
     val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer { keyword ->
@@ -84,22 +92,22 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
             showNormalToast("搜索内容不能为空喔~")
             return@BindingConsumer
         }
-//        uc.searchConfirmEvent.postValue(keyword)
+        uc.searchConfirmEvent.postValue(keyword)
     })
 
     val onSearchIconCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-//        uc.searchIconClickEvent.call()
+        uc.searchIconClickEvent.call()
     })
 
     /*搜索的历史记录Item点击事件*/
     val onSearchItemClick: SuggestionsAdapter.OnItemViewClickListener =
         object : SuggestionsAdapter.OnItemViewClickListener {
             override fun OnItemDeleteListener(position: Int, v: View?) {
-//                uc.searchItemDeleteEvent.postValue(position)
+                uc.searchItemDeleteEvent.postValue(position)
             }
 
             override fun OnItemClickListener(position: Int, v: View?) {
-//                uc.searchItemClickEvent.postValue(position)
+                uc.searchItemClickEvent.postValue(position)
             }
         }
 
@@ -113,14 +121,14 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
                 override fun onResult(t: BaseBean<ProjectBean>) {
                     if (t.errorCode == 0) {
                         currentProjectPage++
-//                        uc.loadProjectCompleteEvent.postValue(t.data)
+                        uc.loadProjectCompleteEvent.postValue(t.data)
                     } else {
-//                        uc.loadProjectCompleteEvent.postValue(null)
+                        uc.loadProjectCompleteEvent.postValue(null)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-//                    uc.loadProjectCompleteEvent.postValue(null)
+                    uc.loadProjectCompleteEvent.postValue(null)
                     showErrorToast(msg)
                 }
             })
@@ -132,7 +140,8 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>() {
                 override fun onResult(t: BaseBean<List<SearchHotKeyBean>>) {
                     if (t.errorCode == 0) {
-//                        uc.loadSearchHotKeyEvent.postValue(t.data)
+                        uc.loadSearchHotKeyEvent.postValue(t.data)
+                        LogUtils.d("--------------"+t)
                     }
                 }
 
@@ -163,14 +172,15 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
                     override fun onResult(t: BaseBean<HomeArticleBean>) {
                         if (t.errorCode == 0) {
                             currentArticlePage++
-//                            uc.loadArticleCompleteEvent.postValue(t.data)
+                            uc.loadArticleCompleteEvent.postValue(t.data)
+                            LogUtils.d("-----getArticle---------"+t)
                         } else {
-//                            uc.loadArticleCompleteEvent.postValue(null)
+                            uc.loadArticleCompleteEvent.postValue(null)
                         }
                     }
 
                     override fun onFailed(msg: String?) {
-//                        uc.loadArticleCompleteEvent.postValue(null)
+                        uc.loadArticleCompleteEvent.postValue(null)
                         showErrorToast(msg)
                     }
                 })
@@ -182,14 +192,14 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
                 override fun onResult(t: BaseBean<HomeArticleBean>) {
                     if (t.errorCode == 0) {
                         currentArticlePage++
-//                        uc.loadArticleCompleteEvent.postValue(t.data)
+                        uc.loadArticleCompleteEvent.postValue(t.data)
                     } else {
-//                        uc.loadArticleCompleteEvent.postValue(null)
+                        uc.loadArticleCompleteEvent.postValue(null)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-//                    uc.loadArticleCompleteEvent.postValue(null)
+                    uc.loadArticleCompleteEvent.postValue(null)
                     showErrorToast(msg)
                 }
             })
@@ -201,7 +211,7 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<HomeBannerBean>>>(loadService) {
                 override fun onResult(t: BaseBean<List<HomeBannerBean>>) {
                     if (t.errorCode == 0) {
-//                        uc.bannerCompleteEvent.postValue(t.data)
+                        uc.bannerCompleteEvent.postValue(t.data)
                     }
                 }
 
@@ -211,8 +221,8 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
             })
     }
 
-//    fun <T: Serializable>getCacheData(key:String):List<T>{
-//        return model.getCacheListData(key)?: emptyList()
-//    }
+    fun <T: Serializable>getCacheData(key:String):List<T>{
+        return model.getCacheListData(key)?: emptyList()
+    }
 
 }

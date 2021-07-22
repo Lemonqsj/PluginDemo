@@ -6,6 +6,7 @@ import com.lemon.lib_base.data.bean.*
 import com.lemon.lib_base.data.source.HttpDataSource
 import com.lemon.lib_base.data.source.LocalDataSource
 import io.reactivex.Observable
+import java.io.Serializable
 
 class DataRespository constructor(
     private val mLocalDataSource: LocalDataSource,
@@ -48,6 +49,11 @@ class DataRespository constructor(
 
     override fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>> {
        return mHttpDataSource.getHomeTopArticle()
+    }
+
+
+    override fun <T : Serializable> getCacheListData(key:String): List<T>? {
+        return mLocalDataSource.getCacheListData(key)
     }
 
 }

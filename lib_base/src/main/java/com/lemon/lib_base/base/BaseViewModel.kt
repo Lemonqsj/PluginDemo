@@ -4,6 +4,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.kingja.loadsir.core.LoadService
+import com.lemon.lib_base.binding.command.BindingAction
+import com.lemon.lib_base.binding.command.BindingCommand
+import com.lemon.lib_base.event.UIChangeLiveData
 import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -31,6 +34,35 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     private lateinit var lifecycle: WeakReference<LifecycleProvider<*>>
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
+
+    val uC: UIChangeLiveData = UIChangeLiveData()
+
+
+
+    val refreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        refreshCommand()
+    })
+
+    val loadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        loadMoreCommand()
+    })
+
+    val scrollToTopCommand: BindingCommand<Void> =
+        BindingCommand(BindingAction { scrollToTop() })
+
+    fun scrollToTop() {
+        uC.scrollTopEvent.call()
+    }
+
+    /**
+     * 通用recyclerview刷新
+     */
+    open fun refreshCommand() {}
+
+    /**
+     * 通用recyclerview加载更多
+     */
+    open fun loadMoreCommand() {}
     open fun addSubscribe(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }

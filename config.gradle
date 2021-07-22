@@ -104,6 +104,10 @@ ext{
             'banner'                               : 'com.youth.banner:banner:2.1.0',
             'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
             'shimmer-recyclerView'                 : 'com.github.sharish:ShimmerRecyclerView:v1.3',
+            'permissionx'                          : 'com.permissionx.guolindev:permissionx:1.4.0',
+            'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
+            'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
+            'shadowlayout'                         : 'com.github.lihangleo2:ShadowLayout:3.1.8',
 
     ]
 }

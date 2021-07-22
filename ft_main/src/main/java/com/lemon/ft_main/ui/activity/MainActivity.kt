@@ -31,6 +31,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun initData() {
         initBottomBar()
+        initViewPager()
     }
 
     override fun initViewObservable() {

@@ -13,7 +13,6 @@ public class BindingCommand<T> {
     private BindingFunction<Boolean> canExecute0;
 
     public BindingCommand(BindingAction execute) {
-        LogUtils.d("---------BindingCommand------");
         this.execute = execute;
     }
 

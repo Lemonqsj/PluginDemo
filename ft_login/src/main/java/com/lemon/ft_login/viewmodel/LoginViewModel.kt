@@ -19,12 +19,10 @@ class LoginViewModel(application: MyApplication, model: DataRespository) :
 
     val onAccountChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
         account.set(it)
-        LogUtils.d("----账号---------"+it)
     })
 
     val onPwdChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
         pwd.set(it)
-        LogUtils.d("----密码---------"+it)
     })
 
     var btnLoginClick: BindingCommand<Any> = BindingCommand(BindingAction {
@@ -32,7 +30,6 @@ class LoginViewModel(application: MyApplication, model: DataRespository) :
     })
 
     private fun loginByPwd() {
-        LogUtils.d("---------------------------")
         RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
 //        AppManager.instance.finishAllActivity()
     }
