@@ -50,6 +50,7 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
 
 
     val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        LogUtils.d("--------onLoadMoreListener------")
         when (tabSelectedPosition.get()) {
             0 -> {
                 getArticle()
@@ -63,6 +64,7 @@ class HomeViewModel(application: MyApplication, model: DataRespository) :
 
 
     val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        LogUtils.d("--------onRefreshListener------")
         currentArticlePage = -1
         currentProjectPage = -1
         getBanner()

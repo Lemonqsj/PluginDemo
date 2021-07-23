@@ -108,6 +108,8 @@ ext{
             'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
             'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
             'shadowlayout'                         : 'com.github.lihangleo2:ShadowLayout:3.1.8',
+            'dialog-datetime'                      : 'com.afollestad.material-dialogs:datetime:3.3.0',
+            'dialog-lifecycle'                     : 'com.afollestad.material-dialogs:lifecycle:3.3.0',
 
     ]
 }

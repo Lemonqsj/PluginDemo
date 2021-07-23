@@ -18,7 +18,7 @@ import me.yokeyword.fragmentation.SupportFragment
 class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun initViewModelId(): Int {
-        return BR.viewmodel
+        return BR.viewModel
     }
 
     override fun initLayoutContentView(): Int {
@@ -30,6 +30,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
     }
 
     override fun initData() {
+        setSwipeBackEnable(false)
         initBottomBar()
         initViewPager()
     }
@@ -42,12 +43,13 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
         // 设置不可滑动
         binding.viewPager2.isUserInputEnabled = false
         val homeFragment = RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
-        val squareFragment =
-            RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
-        val projectFragment =
-            RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
-        val userFragment = RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
-        val fragments = arrayListOf(homeFragment, squareFragment, projectFragment, userFragment)
+//        val squareFragment =
+//            RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
+//        val projectFragment =
+//            RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
+//        val userFragment = RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
+//        val fragments = arrayListOf(homeFragment, squareFragment, projectFragment, userFragment)
+        val fragments = arrayListOf(homeFragment)
         binding.viewPager2.apply {
             adapter = ViewPagerFmAdapter(supportFragmentManager, lifecycle, fragments)
             offscreenPageLimit = fragments.size
@@ -65,28 +67,28 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
                 ).setActiveColorResource(R.color.md_theme_red)
                     .setInactiveIconResource(R.drawable.ic_home_off)
             )
-            addItem(
-                BottomNavigationItem(
-                    R.drawable.ic_square_on,
-                    getString(R.string.main_tab_square)
-                ).setActiveColorResource(R.color.md_theme_red)
-                    .setInactiveIconResource(R.drawable.ic_square_off)
-            )
-            addItem(
-                BottomNavigationItem(
-                    R.drawable.ic_project_on,
-                    getString(R.string.main_tab_project)
-                )
-                    .setActiveColorResource(R.color.md_theme_red)
-                    .setInactiveIconResource(R.drawable.ic_project_off)
-            )
-            addItem(
-                BottomNavigationItem(
-                    R.drawable.ic_me_on,
-                    getString(R.string.main_tab_me)
-                ).setActiveColorResource(R.color.md_theme_red)
-                    .setInactiveIconResource(R.drawable.ic_me_off)
-            )
+//            addItem(
+//                BottomNavigationItem(
+//                    R.drawable.ic_square_on,
+//                    getString(R.string.main_tab_square)
+//                ).setActiveColorResource(R.color.md_theme_red)
+//                    .setInactiveIconResource(R.drawable.ic_square_off)
+//            )
+//            addItem(
+//                BottomNavigationItem(
+//                    R.drawable.ic_project_on,
+//                    getString(R.string.main_tab_project)
+//                )
+//                    .setActiveColorResource(R.color.md_theme_red)
+//                    .setInactiveIconResource(R.drawable.ic_project_off)
+//            )
+//            addItem(
+//                BottomNavigationItem(
+//                    R.drawable.ic_me_on,
+//                    getString(R.string.main_tab_me)
+//                ).setActiveColorResource(R.color.md_theme_red)
+//                    .setInactiveIconResource(R.drawable.ic_me_off)
+//            )
             setFirstSelectedPosition(0)
             initialise()
         }

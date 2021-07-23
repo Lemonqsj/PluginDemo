@@ -1,8 +1,11 @@
 package com.lemon.ft_main.ui.fragment
 
+import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.ethanhua.skeleton.Skeleton
 import com.ethanhua.skeleton.SkeletonScreen
@@ -12,7 +15,6 @@ import com.lemon.ft_main.adapter.HomeArticleAdapter
 import com.lemon.ft_main.adapter.HomeProjectAdapter
 import com.lemon.ft_main.adapter.MyBannerAdapter
 import com.lemon.ft_main.databinding.MainFragmentHomeBinding
-import com.lemon.ft_main.databinding.MainFragmentHomeBindingImpl
 import com.lemon.ft_main.viewmodel.HomeViewModel
 import com.lemon.lib_base.base.BaseFragment
 import com.lemon.lib_base.config.AppConstants
@@ -41,6 +43,10 @@ class HomeFragment:BaseFragment<MainFragmentHomeBinding,HomeViewModel> (){
 
     override fun initContentView(): Int {
        return R.layout.main_fragment_home
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showLoadingStatePage()
     }
 
 
@@ -76,7 +82,8 @@ class HomeFragment:BaseFragment<MainFragmentHomeBinding,HomeViewModel> (){
         )
             .compose(RxThreadHelper.rxSchedulerHelper())
             .subscribe({
-//                showSuccessStatePage()
+                showSuccessStatePage()
+                LogUtils.d("--------------"+it)
                 if (!it.isNullOrEmpty()) {
                     when (it[0]) {
                         is HomeBannerBean? -> {
@@ -93,10 +100,13 @@ class HomeFragment:BaseFragment<MainFragmentHomeBinding,HomeViewModel> (){
                         }
                     }
                 } else {
-                    binding.smartCommon.autoRefresh()
+                    LogUtils.d("--------autoRefresh------"+binding.smartCommon.autoRefresh())
+
+
                 }
             }) {
-//                showSuccessStatePage()
+                LogUtils.d("--------err------"+it)
+                showSuccessStatePage()
                 it.printStackTrace()
                 binding.smartCommon.autoRefresh()
             })
@@ -104,6 +114,10 @@ class HomeFragment:BaseFragment<MainFragmentHomeBinding,HomeViewModel> (){
 
     }
 
+    override fun reload() {
+        super.reload()
+        binding.smartCommon.autoRefresh()
+    }
 
     override fun initViewObservable() {
 
@@ -181,34 +195,7 @@ class HomeFragment:BaseFragment<MainFragmentHomeBinding,HomeViewModel> (){
             showShimmerAdapter()
         }
     }
-//
-//    /**
-//     * 刷新搜索记录
-//     */
-//    private fun setSuggestAdapterData() {
-//        viewModel.addSubscribe(viewModel.model.getSearchHistoryByUid()
-//            .compose(RxThreadHelper.rxFlowSchedulerHelper())
-//            .subscribe {
-//                suggestAdapter.suggestions = it.map { x -> x.history }
-//                if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()
-//            })
-//    }
-//
-//    private fun initSearchBar() {
-//        if (!this::mHomeDrawerPop.isInitialized) {
-//            mHomeDrawerPop = HomeDrawerPop(this)
-//        }
-//        if (!this::suggestAdapter.isInitialized) {
-//            suggestAdapter = SearchSuggestAdapter(layoutInflater)
-//            suggestAdapter.setListener(viewModel.onSearchItemClick)
-//            setSuggestAdapterData()
-//        }
-//        binding.searchBar.apply {
-//            setMaxSuggestionCount(5)
-//            setCustomSuggestionAdapter(suggestAdapter)
-//        }
-//    }
-//
+
     private fun initBanner() {
         bannerSkeleton = Skeleton.bind(binding.banner)
             .load(R.layout.main_banner_skeleton)

@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.kingja.loadsir.callback.Callback
@@ -20,6 +19,7 @@ import com.lemon.lib_base.R
 import com.lemon.lib_base.callback.ErrorCallback
 import com.lemon.lib_base.callback.LoadErrorCallback
 import com.lemon.lib_base.callback.LoadingCallback
+import com.lemon.lib_base.utils.DialogHelper
 import com.lxj.xpopup.core.BasePopupView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import org.koin.android.ext.android.get
@@ -32,7 +32,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
     lateinit var binding: V
     lateinit var viewModel: VM
     private var viewModelId = 0
-    private val dialog: BasePopupView? = null
+    private var dialog: BasePopupView? = null
 
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
@@ -78,27 +78,51 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
 
 
         initViewDataBinding()
+
+        registerUIChangeLiveDataCallBack()
     }
 
+    private fun registerUIChangeLiveDataCallBack() {
 
+//加载对话框显示
+        viewModel.uC.getShowLoadingEvent()
+            .observe(this, { title: String? -> showLoading(title) })
+        //加载对话框消失
+        viewModel.uC.getDismissDialogEvent()
+            .observe(this, { dismissLoading() })
+
+        viewModel.uC.getScrollTopEvent().observe(this, {
+            ryCommon?.smoothScrollToPosition(0)
+        })
+    }
+
+    /**
+     * 正常创建启动Fragment情况 onViewCreated-onLazyInitView-onEnterAnimationEnd
+     * Viewpager创建实例 onViewCreated-onLazyInitView
+     */
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
-        if (enableLazyLoad()) {
+        if (enableLazy()) {
+            //页面数据初始化方法
             initData()
-
+            //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
             initViewObservable()
         }
-
     }
 
+    /**
+     * 入栈动画完毕后执行
+     */
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
         super.onEnterAnimationEnd(savedInstanceState)
-
-        if (!enableLazyLoad()) {
+        if (!enableLazy()) {
+            //页面数据初始化方法
             initData()
+            //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
             initViewObservable()
         }
     }
+
 
     /**
      * @return 是否需要标题栏
@@ -118,7 +142,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
         lifecycle.addObserver(viewModel)
         viewModel.injectLifecycleProvider(this)
 
-        viewModel.loadService=loadService
+        viewModel.loadService = loadService
 
 
     }
@@ -133,7 +157,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
 
     abstract fun initVariableId(): Int
 
-    private fun reload() {
+    open fun reload() {
         loadService.showCallback(LoadingCallback::class.java)
     }
 
@@ -148,9 +172,24 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
 
     abstract fun initContentView(): Int
 
-
+    /**
+     * 是否开启懒加载,默认true
+     *
+     * @return
+     */
+    protected open fun enableLazy(): Boolean {
+        return true
+    }
     protected open fun enableLazyLoad(): Boolean {
         return true
+    }
+
+    fun showLoading(title: String?) {
+        dialog = DialogHelper.showLoadingDialog(requireContext(), title)
+    }
+
+    fun dismissLoading() {
+        dialog?.smartDismiss()
     }
 
     /**

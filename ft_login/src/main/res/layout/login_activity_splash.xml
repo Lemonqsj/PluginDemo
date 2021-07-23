@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.lemon.ft_login.viewmodel.SplashViewModel" />
     </data>
 

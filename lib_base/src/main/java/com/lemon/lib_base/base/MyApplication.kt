@@ -3,10 +3,15 @@ package com.lemon.lib_base.base
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.lemon.lib_base.BuildConfig
+import com.lemon.lib_base.R
 import com.lemon.lib_base.di.allModule
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
 import me.yokeyword.fragmentation.Fragmentation
 import org.koin.android.ext.koin.androidContext
@@ -81,4 +86,34 @@ class MyApplication : Application() {
     override fun onTerminate() {
         super.onTerminate()
     }
+
+    companion object {
+        init {
+            ClassicsFooter.REFRESH_FOOTER_FINISH = ""
+            SmartRefreshLayout.setDefaultRefreshInitializer { _, layout ->
+                layout.apply {
+                    setEnableOverScrollDrag(true)
+                    setEnableScrollContentWhenLoaded(false)
+                    setEnableAutoLoadMore(true)
+                    setEnableOverScrollBounce(true)
+                    setFooterHeight(60f)
+                }
+            }
+            SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+                layout.apply {
+                    setPrimaryColorsId(R.color.md_theme_red, R.color.white)
+                }
+                MaterialHeader(context).setColorSchemeColors(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.md_theme_red
+                    )
+                )
+            }
+            SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+                ClassicsFooter(context).setFinishDuration(0)
+            }
+        }
+    }
+
 }

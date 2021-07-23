@@ -25,7 +25,7 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding,SplashViewModel>(
     private val arrayDark = arrayListOf(R.drawable.splash_bg_dark, R.drawable.bg_splash_dark2)
 
     override fun initViewModelId(): Int {
-       return BR.viewmodel
+       return BR.viewModel
     }
 
     override fun initLayoutContentView(): Int {

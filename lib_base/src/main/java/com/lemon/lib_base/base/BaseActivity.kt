@@ -7,6 +7,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.LogUtils
 import com.lemon.lib_base.mvvm.ui.ContainerFmActivity
+import com.lemon.lib_base.utils.DialogHelper
+import com.lxj.xpopup.core.BasePopupView
 import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
 
@@ -17,6 +19,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
     lateinit var viewModel: VM
     private var viewModelId: Int = 0
 
+    private var dialog: BasePopupView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,6 +30,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
 
         initViewDataBinding(savedInstanceState)
 
+        //私有的ViewModel与View的契约事件回调逻辑
+        registerUIChangeLiveDataCallBack()
         //页面数据初始化方法
         initData()
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
@@ -54,12 +60,15 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
 
     }
 
-//    private fun initViewModel(): VM {
-//        val type = javaClass.genericSuperclass
-//        val modelClass = (type as ParameterizedType).actualTypeArguments[1] as Class<VM>
-//
-//        return ViewModelProvider(this, get<AppViewModelFactory>()).get(modelClass)
-//    }
+    private fun registerUIChangeLiveDataCallBack() {
+
+        //加载对话框显示
+        viewModel.uC.getShowLoadingEvent()
+            .observe(this, { title: String? -> showLoading(title) })
+        //加载对话框消失
+        viewModel.uC.getDismissDialogEvent()
+            .observe(this, { v: Void? -> dismissLoading() })
+    }
 
     private fun initViewModel(): VM {
         val type = javaClass.genericSuperclass
@@ -82,4 +91,11 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> : BaseRx
         startActivity(intent)
     }
 
+    fun showLoading(title: String?) {
+        dialog = DialogHelper.showLoadingDialog(this, title)
+    }
+
+    fun dismissLoading() {
+        dialog?.smartDismiss()
+    }
 }

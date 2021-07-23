@@ -69,7 +69,7 @@
                     android:textColor="#FFFFFF"
                     android:textColorHint="#FFFFFF"
                     binding:textChanged="@{viewModel.onAccountChangeCommand}"
-                    android:theme="@style/TextInputWhiteStyle"></com.google.android.material.textfield.TextInputEditText>
+                    android:theme="@style/TextInputWhiteStyle"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -27,7 +27,7 @@ public class UIChangeLiveData extends SingleLiveEvent {
         return scrollTopEvent = createLiveData(scrollTopEvent);
     }
     public SingleLiveEvent<String> getShowLoadingEvent() {
-        return showLoadingEvent = createLiveData(showLoadingEvent);
+            return showLoadingEvent = createLiveData(showLoadingEvent);
     }
 
     public SingleLiveEvent<Void> getDismissDialogEvent() {
