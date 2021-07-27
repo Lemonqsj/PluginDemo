@@ -1,16 +1,107 @@
-apply from: "../module.build.gradle"
+//if (isBuildModule.toBoolean()) {
+    //作为独立App应用运行
+    apply plugin: 'com.android.application'
+//} else {
+//    //作为组件运行
+//    apply plugin: 'com.android.library'
+//}
+apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.alibaba.arouter'
+
 
 
 android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
     defaultConfig {
-        if (isBuildModule.toBoolean()) {
+//        if (isBuildModule.toBoolean()) {
             applicationId "com.lemon.ft_login"
-        }
+
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        }
     }
     resourcePrefix "login_"
+
+
+    kapt {
+        arguments {
+            // 路由框架译配置
+            // module名称
+            arg("AROUTER_MODULE_NAME", project.getName())
+            // 是否生成路由文档，"enable"：生成文档，其他字符串不生成路由文档
+            arg("AROUTER_GENERATE_DOC", "enable")
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            if (isBuildModule.toBoolean()) {
+                //独立运行
+                manifest.srcFile 'src/main/alone/AndroidManifest.xml'
+            } else {
+                //合并到宿主
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                resources {
+                    //正式版本时，排除alone文件夹下所有调试文件
+                    exclude 'src/main/alone/*'
+                }
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+
+//    buildFeatures {
+//        viewBinding true
+//    }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     api project(':lib_base')
     kapt  rootProject.ext.dependencies["arouter_compiler"]
+}
+
+//引入插件
+apply plugin: 'replugin-plugin-gradle'
+repluginPluginConfig {
+    pluginName = "ft_login" //定义插件名
+    hostApplicationId = "com.imooc.imooc_voice" //宿主applicationId
+    hostAppLauncherActivity = "com.imooc.imooc_voice.view.loading.LoadingActivity" //宿主工程启动activity
+}
+
+//添加依赖
+dependencies {
+    implementation "com.qihoo360.replugin:replugin-plugin-lib:2.3.3"
+//    compileOnly files('libs/fragment.jar') //这个jar就是从Support-fragment中提取出来的并非特制包目的是为了骗过编译期
 }
